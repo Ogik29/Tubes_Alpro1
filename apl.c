@@ -234,6 +234,29 @@ void simpanKeFile(struct transaction trans[], int jmlh_trans) {
     printf("\n\n");
 }
 
+void simpanKeFile2(struct ikan iwak[], int jmlh_ikan) {
+    FILE *file2 = fopen("C:\\Belajar_Bahasa_C\\mainTubesAlpro\\history_ikan.csv", "w");
+    if (file2 != NULL) {
+        for (int i = 0; i < jmlh_ikan; i++) {
+            char jeniss[50];
+            if (iwak[i].jenis == 0)
+            {
+                strcpy(jeniss, "Tawar");
+            } else if(iwak[i].jenis == 1) {
+                strcpy(jeniss, "Laut");
+            }
+
+            fprintf(file2, "%-20s %-20s %-20d\n", iwak[i].nama, jeniss, iwak[i].harga);
+        }
+        fclose(file2);
+        printf("Data berhasil disimpan ke dalam file.\n");
+    } else {
+        printf("Gagal menyimpan data ke dalam file.\n");
+    }
+    printf("\n\n");
+}
+
+
 
 // ==== VOID MEMUAT ATAU MEMBACA FILE CSV ==== //
 void muatDariFile(struct transaction trans[], int *jmlh_trans) {
@@ -267,6 +290,57 @@ void muatDariFile(struct transaction trans[], int *jmlh_trans) {
 
     printf("\n\n");
 }
+
+// void muatDariFile(struct transaction trans[], int *jmlh_trans, struct ikan iwak[], int *jmlh_ikan) {
+//     FILE *file = fopen("C:\\Belajar_Bahasa_C\\mainTubesAlpro\\history.csv", "r");
+
+//     char nama_kustomer[max_trans][50];
+//     char nama_ikan[max_trans][50];
+//     int jumlah_ikan[max_trans], total_harga[max_trans];
+//     int index = *jmlh_trans;
+//     if (file != NULL) {
+//         while ((fscanf(file, "%s %s %d %d", nama_kustomer[index], nama_ikan[index], &jumlah_ikan[index], 
+//         &total_harga[index]) == 4) && (index < max_trans)) {
+//             index++;
+//         }
+        
+//         for (int i = *jmlh_trans; i < index; i++)
+//         {
+//             strcpy(trans[*jmlh_trans].kustomer, nama_kustomer[i]);
+//             strcpy(trans[*jmlh_trans].nama_ikan, nama_ikan[i]);
+//             trans[*jmlh_trans].jumlah = jumlah_ikan[i];
+//             trans[*jmlh_trans].total = total_harga[i];
+//             (*jmlh_trans)++;
+
+//             // untuk memasukkan data ikan dari data yang ada pada transaction (wrong)
+//             // if(*jmlh_ikan == 0) {
+//             //         strcpy(iwak[*jmlh_ikan].nama, nama_ikan[i]);
+//             //         iwak[*jmlh_ikan].harga = total_harga[i] / jumlah_ikan[i];
+//             //         printf("Jenis ikan Tawar/Laut (0/1): \n");
+//             //         scanf("%d", &iwak[*jmlh_ikan].jenis);
+//             //         (*jmlh_ikan)++;
+//             // } else {
+//             //     for(int k = 0; k < *jmlh_ikan; k++) {
+//             //         if(strcmp(iwak[k].nama, nama_ikan[i]) != 0) {
+//             //             strcpy(iwak[*jmlh_ikan].nama, nama_ikan[i]);
+//             //             iwak[*jmlh_ikan].harga = total_harga[i] / jumlah_ikan[i];
+//             //             printf("Jenis ikan Tawar/Laut (0/1): \n");
+//             //             scanf("%d", &iwak[*jmlh_ikan].jenis);
+//             //             (*jmlh_ikan)++;
+//             //         }
+//             //     }
+//             // }
+//         }
+        
+//         printf("Data berhasil dimuat dari file.\n");
+//     } else {
+//         printf("Gagal memuat data dari file.\n");
+//     }
+
+//     fclose(file);
+
+//     printf("\n\n");
+// }
 
 // Program Utama
 int main() {
@@ -305,6 +379,10 @@ int main() {
             printf("10. Simpan data transaksi ke file\n");
         }
         printf("11. Membaca data transaksi dari file\n");
+        if (jmlh_ikan >= 1)
+        {
+         printf("12. Simpan data ikan ke file\n");   
+        }
         printf("Masukkan pilihan beliau:\n");
         scanf("%d", &pil);
 
@@ -353,6 +431,10 @@ int main() {
 
         case 11: 
             muatDariFile(trans, &jmlh_trans);
+            break;
+
+        case 12:
+            simpanKeFile2(iwak, jmlh_ikan);
             break;
 
         default:
